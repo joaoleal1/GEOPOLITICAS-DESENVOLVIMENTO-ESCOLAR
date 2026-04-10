@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educação de Qualidade | Respeito, Responsabilidade e Aprendizado</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-2:#111833;
+      --card:#151d3a;
+      --card-2:#1b2550;
+      --text:#f4f7ff;
+      --muted:#c8d0ea;
+      --accent:#7c5cff;
+      --accent-2:#25c2a0;
+      --line:rgba(255,255,255,.12);
+      --shadow:0 18px 50px rgba(0,0,0,.28);
+      --radius:24px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(124,92,255,.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(37,194,160,.18), transparent 25%),
+        linear-gradient(180deg, var(--bg), #090d18 45%, #070b14 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{width:min(var(--max), calc(100% - 32px)); margin:auto}
+
+    /* Top bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter: blur(16px);
+      background:rgba(9,13,24,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.2px;
+      font-size:1.05rem;
+    }
+    .brand-badge{
+      width:42px;height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      display:grid;place-items:center;
+      box-shadow:var(--shadow);
+      font-size:1.2rem;
+    }
+    .menu{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+    .menu a{
+      color:var(--muted);
+      font-size:.95rem;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition:.25s ease;
+    }
+    .menu a:hover{
+      border-color:var(--line);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+    }
+
+    /* Hero */
+    .hero{
+      padding:72px 0 34px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.25fr .95fr;
+      gap:28px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(124,92,255,.14);
+      border:1px solid rgba(124,92,255,.28);
+      color:#ddd7ff;
+      margin-bottom:18px;
+      font-size:.92rem;
+    }
+    .hero h1{
+      font-size:clamp(2.2rem, 5vw, 4.6rem);
+      line-height:1.03;
+      letter-spacing:-1px;
+      margin-bottom:18px;
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:1.04rem;
+      max-width:62ch;
+      margin-bottom:28px;
+    }
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 20px;
+      border-radius:16px;
+      font-weight:700;
+      border:1px solid transparent;
+      transition:.25s ease;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), #9a7bff);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(124,92,255,.28);
+    }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{
+      border-color:var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.07)}
+
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -70px -70px auto;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(37,194,160,.28), transparent 62%);
+      pointer-events:none;
+    }
+    .hero-card h3{font-size:1.15rem;margin-bottom:10px}
+    .hero-card p{font-size:.98rem;color:var(--muted);margin-bottom:18px}
+    .mini-list{
+      display:grid;
+      gap:12px;
+    }
+    .mini-item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .mini-icon{
+      width:38px;height:38px;border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(37,194,160,.15);
+      border:1px solid rgba(37,194,160,.22);
+      flex:0 0 auto;
+    }
+    .mini-item strong{display:block;margin-bottom:2px}
+    .mini-item span{color:var(--muted);font-size:.92rem}
+
+    /* Section basics */
+    section{padding:34px 0}
+    .section-title{
+      margin-bottom:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .section-title h2{
+      font-size:clamp(1.7rem, 3vw, 2.8rem);
+      line-height:1.1;
+      letter-spacing:-.5px;
+    }
+    .section-title p{color:var(--muted);max-width:80ch}
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      height:100%;
+    }
+    .card h3{font-size:1.2rem;margin-bottom:10px}
+    .card p{color:var(--muted)}
+    .icon-box{
+      width:54px;height:54px;border-radius:18px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(124,92,255,.18), rgba(37,194,160,.14));
+      border:1px solid rgba(255,255,255,.08);
+      font-size:1.35rem;
+      margin-bottom:14px;
+    }
+
+    .problem{
+      background:linear-gradient(180deg, rgba(11,16,32,.2), rgba(17,24,51,.55));
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+    .problem .grid-2{
+      align-items:start;
+    }
+    .quote-box{
+      border-left:4px solid var(--accent-2);
+      padding-left:16px;
+      color:#eef4ff;
+    }
+    .quote-box p{
+      font-size:1.05rem;
+      color:var(--text);
+    }
+
+    .steps{
+      counter-reset:step;
+      display:grid;
+      gap:14px;
+    }
+    .step{
+      display:flex;
+      gap:14px;
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .step::before{
+      counter-increment:step;
+      content:"0" counter(step);
+      font-weight:800;
+      color:#cfd5ff;
+      min-width:46px;
+      padding-top:2px;
+    }
+    .step strong{display:block;margin-bottom:4px}
+    .step span{color:var(--muted)}
+
+    .highlight{
+      background:linear-gradient(180deg, rgba(124,92,255,.12), rgba(37,194,160,.08));
+      border:1px solid rgba(124,92,255,.18);
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+    .pill{
+      padding:9px 13px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#eef3ff;
+      font-size:.92rem;
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-top:18px;
+    }
+    .stat{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      text-align:center;
+    }
+    .stat b{
+      display:block;
+      font-size:1.6rem;
+      margin-bottom:4px;
+      color:#fff;
+    }
+    .stat span{color:var(--muted);font-size:.92rem}
+
+    .callout{
+      padding:26px;
+      border-radius:28px;
+      background:linear-gradient(135deg, rgba(124,92,255,.18), rgba(37,194,160,.12));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+    }
+    .callout h2{margin-bottom:10px}
+    .callout p{color:var(--muted);max-width:80ch}
+
+    footer{
+      padding:28px 0 40px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+      margin-top:20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.grid-2,.two-col,.stats{grid-template-columns:1fr}
+      .menu{display:none}
+      .hero{padding-top:42px}
+    }
+
+    @media (max-width: 560px){
+      .container{width:min(var(--max), calc(100% - 20px))}
+      .hero h1{font-size:2.1rem}
+      .btn{width:100%}
+      .cta-row{flex-direction:column}
+      .card,.hero-card{padding:18px}
+      .stat b{font-size:1.4rem}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#topo" class="brand">
+        <div class="brand-badge">📘</div>
+        <div>
+          <div>Educação de Qualidade</div>
+          <small style="color:var(--muted);font-weight:400;">Respeito • Responsabilidade • Aprendizado</small>
+        </div>
+      </a>
+
+      <nav class="menu" aria-label="Navegação principal">
+        <a href="#importancia">Importância</a>
+        <a href="#comportamento">Comportamento</a>
+        <a href="#professor">Papel do Professor</a>
+        <a href="#aluno">Papel do Aluno</a>
+        <a href="#acao">Ação</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="topo">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">✨ Consciência para um ensino melhor</div>
+          <h1>Educação de qualidade começa com respeito dentro da sala de aula.</h1>
+          <p>
+            Um ambiente escolar saudável depende do compromisso dos alunos em respeitar o professor,
+            ouvir com atenção, evitar interrupções e valorizar o momento da aula. Quando existe
+            responsabilidade, a aprendizagem acontece com mais foco, qualidade e sentido.
+          </p>
+
+          <div class="cta-row">
+            <a href="#acao" class="btn btn-primary">Ver proposta</a>
+            <a href="#importancia" class="btn btn-ghost">Entender o tema</a>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill">Respeito ao professor</span>
+            <span class="pill">Atenção em sala</span>
+            <span class="pill">Responsabilidade do aluno</span>
+            <span class="pill">Ambiente escolar organizado</span>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h3>O que este site defende</h3>
+          <p>
+            A ideia é mostrar que a qualidade da aula não depende só do conteúdo, mas também do
+            comportamento dos estudantes e da cultura de respeito no ambiente escolar.
+          </p>
+
+          <div class="mini-list">
+            <div class="mini-item">
+              <div class="mini-icon">🎯</div>
+              <div>
+                <strong>Foco na aprendizagem</strong>
+                <span>Menos distração, mais aproveitamento.</span>
+              </div>
+            </div>
+            <div class="mini-item">
+              <div class="mini-icon">🤝</div>
+              <div>
+                <strong>Convivência saudável</strong>
+                <span>Respeito entre alunos, professores e escola.</span>
+              </div>
+            </div>
+            <div class="mini-item">
+              <div class="mini-icon">📚</div>
+              <div>
+                <strong>Ensino com qualidade</strong>
+                <span>O professor consegue ensinar melhor.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="importancia" class="problem">
+      <div class="container">
+        <div class="section-title">
+          <h2>Por que a educação de qualidade depende do comportamento em sala?</h2>
+          <p>
+            Muitos professores enfrentam dificuldades para dar aula porque parte dos alunos não
+            respeita o momento de aprendizagem. Conversas paralelas, uso inadequado do celular,
+            interrupções e falta de atenção atrapalham o ritmo da turma inteira.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card highlight">
+            <div class="icon-box">⚠️</div>
+            <h3>O problema da desatenção</h3>
+            <p>
+              Quando a sala perde o foco, o conteúdo fica mais difícil de entender, o professor precisa
+              repetir explicações e a aula perde rendimento. Isso prejudica não só quem atrapalha, mas
+              toda a turma.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box">✅</div>
+            <h3>O que melhora com respeito</h3>
+            <p>
+              Um ambiente com disciplina e atenção cria mais oportunidades de aprendizado, melhora a
+              comunicação e faz com que o professor consiga conduzir a aula com mais tranquilidade e
+              qualidade.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="comportamento">
+      <div class="container">
+        <div class="section-title">
+          <h2>Atitudes que fortalecem o ensino</h2>
+          <p>
+            O aluno precisa entender que o direito de aprender vem junto com a responsabilidade de
+            contribuir para o bom andamento da aula.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box">👂</div>
+            <h3>Escuta ativa</h3>
+            <p>Prestar atenção nas explicações e evitar interrupções desnecessárias.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">📵</div>
+            <h3>Uso consciente do celular</h3>
+            <p>Evitar distrações durante a aula e usar o aparelho apenas quando permitido.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box">📝</div>
+            <h3>Participação responsável</h3>
+            <p>Fazer perguntas na hora certa, colaborar com colegas e manter o foco.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="professor">
+      <div class="container two-col">
+        <div class="card">
+          <div class="icon-box">👨‍🏫</div>
+          <h3>O papel do professor</h3>
+          <p>
+            O professor tem a missão de ensinar, orientar e organizar o processo de aprendizagem.
+            Porém, para que isso aconteça bem, ele precisa de silêncio, atenção e respeito.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Planejamento</span>
+            <span class="pill">Mediação</span>
+            <span class="pill">Didática</span>
+            <span class="pill">Conhecimento</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon-box">🏫</div>
+          <h3>O ambiente escolar</h3>
+          <p>
+            A escola deve ser um espaço de convivência, aprendizagem e crescimento. Quando todos
+            entendem seu papel, o ambiente fica mais acolhedor, produtivo e respeitoso.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Ordem</span>
+            <span class="pill">Convivência</span>
+            <span class="pill">Acolhimento</span>
+            <span class="pill">Organização</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="aluno">
+      <div class="container">
+        <div class="section-title">
+          <h2>O aluno como protagonista da qualidade escolar</h2>
+          <p>
+            A melhoria da aula não acontece só por parte da escola ou do professor. O aluno também
+            precisa assumir compromisso com a própria formação.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div>
+              <strong>Respeitar quem está ensinando</strong>
+              <span>Ouvir o professor é o primeiro passo para aprender com mais eficiência.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <strong>Valorizar o tempo da aula</strong>
+              <span>O tempo em sala é importante e precisa ser aproveitado com seriedade.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <strong>Ter postura responsável</strong>
+              <span>Comportamento adequado ajuda a turma inteira a aprender melhor.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="acao">
+      <div class="container">
+        <div class="callout">
+          <h2>Uma educação melhor depende de escolhas melhores.</h2>
+          <p>
+            Quando o estudante entende que aprender é um ato de responsabilidade, ele ajuda a construir
+            uma escola mais forte, uma sala mais organizada e uma aula mais produtiva. Respeito não
+            limita o aluno — ele cria as condições para que o ensino aconteça de verdade.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <b>+ Foco</b>
+              <span>menos distração</span>
+            </div>
+            <div class="stat">
+              <b>+ Respeito</b>
+              <span>melhor convivência</span>
+            </div>
+            <div class="stat">
+              <b>+ Qualidade</b>
+              <span>aula mais proveitosa</span>
+            </div>
+            <div class="stat">
+              <b>+ Futuro</b>
+              <span>aprendizagem real</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>
+          Educação de qualidade não é só conteúdo: é atitude, respeito e responsabilidade dentro da sala de aula.
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Efeito suave no clique dos links do menu
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
